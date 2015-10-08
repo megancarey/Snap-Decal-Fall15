@@ -937,6 +937,12 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'operators',
             spec: '%n / %n' // '%n \u00F7 %n'
         },
+        reportSquareRoot: {
+            type: 'reporter',
+            category: 'operators',
+            spec: 'take the root of %n',
+            spec: '√ %n',
+        },
         reportRound: {
             type: 'reporter',
             category: 'operators',
@@ -1295,10 +1301,11 @@ SpriteMorph.prototype.blockAlternatives = {
     reportMouseY: ['reportMouseX'],
 
     // operators:
-    reportSum: ['reportDifference', 'reportProduct', 'reportQuotient'],
-    reportDifference: ['reportSum', 'reportProduct', 'reportQuotient'],
-    reportProduct: ['reportDifference', 'reportSum', 'reportQuotient'],
-    reportQuotient: ['reportDifference', 'reportProduct', 'reportSum'],
+    reportSum: ['reportDifference', 'reportProduct', 'reportQuotient', 'reportSquareRoot'],
+    reportSquareRoot: ['reportDifference', 'reportProduct', 'reportQuotient', 'reportSum'],
+    reportDifference: ['reportSum', 'reportProduct', 'reportQuotient', 'reportSquareRoot'],
+    reportProduct: ['reportDifference', 'reportSum', 'reportQuotient', 'reportSquareRoot'],
+    reportQuotient: ['reportDifference', 'reportProduct', 'reportSum', 'reportSquareRoot'],
     reportLessThan: ['reportEquals', 'reportGreaterThan'],
     reportEquals: ['reportLessThan', 'reportGreaterThan'],
     reportGreaterThan: ['reportEquals', 'reportLessThan'],
@@ -1980,6 +1987,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportDifference'));
         blocks.push(block('reportProduct'));
         blocks.push(block('reportQuotient'));
+        blocks.push(block('reportSquareRoot'));
         blocks.push('-');
         blocks.push(block('reportModulus'));
         blocks.push(block('reportRound'));
@@ -5512,6 +5520,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportDifference'));
         blocks.push(block('reportProduct'));
         blocks.push(block('reportQuotient'));
+        blocks.push(block('reportSquareRoot'));
         blocks.push('-');
         blocks.push(block('reportModulus'));
         blocks.push(block('reportRound'));

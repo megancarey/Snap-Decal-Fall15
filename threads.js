@@ -2011,6 +2011,10 @@ Process.prototype.reportDifference = function (a, b) {
     return +a - +b;
 };
 
+Process.prototype.reportSquareRoot = function(a) {
+    return Math.sqrt(+a);
+};
+
 Process.prototype.reportProduct = function (a, b) {
     return +a * +b;
 };
