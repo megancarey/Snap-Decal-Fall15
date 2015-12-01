@@ -76,6 +76,7 @@ modules.paint = '2015-June-25';
 var PaintEditorMorph;
 var PaintCanvasMorph;
 var PaintColorPickerMorph;
+var CrossHairsOn = false;
 
 // PaintEditorMorph //////////////////////////
 
@@ -168,7 +169,7 @@ PaintEditorMorph.prototype.buildToolbox = function () {
                 "Stroked Ellipse\n(shift: circle)",
             eraser:
                 "Eraser tool",
-            crosshairs:
+            crosshairs: //put text box here
                 "Set the rotation center",
 
             line:
@@ -398,12 +399,20 @@ PaintEditorMorph.prototype.populatePropertiesMenu = function () {
         "Constrain proportions of shapes?\n(you can also hold shift)",
         function () {return myself.shift; }
     );
+    pc.crosshair = new ToggleMorph(
+        "checkbox",
+        this,
+        function () {CrossHairsOn = !CrossHairsOn; },
+        "Show crosshairs?",
+        function () {return CrossHairsOn; }
+    );
     c.add(pc.colorpicker);
     //c.add(pc.primaryColorButton);
     c.add(pc.primaryColorViewer);
     c.add(new TextMorph(localize("Brush size")));
     c.add(alpen);
     c.add(pc.constrain);
+    c.add(pc.crosshair);
 };
 
 PaintEditorMorph.prototype.toolButton = function (icon, hint) {
@@ -785,6 +794,8 @@ PaintCanvasMorph.prototype.mouseDownLeft = function (pos) {
         this.merge(this.paper, this.erasermask);
     }
 };
+
+PaintCanvasMorph.proto
 
 PaintCanvasMorph.prototype.mouseMove = function (pos) {
     if (this.currentTool === "paintbucket") {
