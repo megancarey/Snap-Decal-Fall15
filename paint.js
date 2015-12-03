@@ -76,6 +76,7 @@ modules.paint = '2015-June-25';
 var PaintEditorMorph;
 var PaintCanvasMorph;
 var PaintColorPickerMorph;
+var TextBoxMorph;
 var CrossHairsOn = false;
 
 // PaintEditorMorph //////////////////////////
@@ -87,6 +88,39 @@ PaintEditorMorph.prototype.constructor = PaintEditorMorph;
 PaintEditorMorph.uber = DialogBoxMorph.prototype;
 
 PaintEditorMorph.prototype.padding = 10;
+
+TextBoxMorph.prototype = new DialogBoxMorph();
+TextBoxMorph.prototype.constructor = TextBoxMorph;
+TextBoxMorph.uber = DialogBoxMorph.prototype;
+
+TextBoxMorph.prototype.padding = 10;
+
+function TextBoxMorph(ctx) {
+    var text = window.prompt("Please enter text.", "INPUT HERE");
+    this.paper.fillStyle = 'black';
+    //ctx.fillText("hi",ctx.width/2,ctx.height/2);
+    //ctx.fillRect(0,0,150,150);
+
+
+    function sendToCanvas(ob) {
+        var img = new Image();
+        img.onload = function() {
+            ctx.drawImage(img, 0, 0);
+            ctx.font = ob.fontWeight + ' ' + ob.fontSize + ' ' + ob.fontFamily;
+            ctx.textAlign = "center";
+            ctx.fillStyle = "rgba(0, 0, 0, 0)";
+            ctx.fillText(ob.text, idk.width/2, idk.height/2);
+        }
+    }
+
+    sendToCanvas({
+        image : "Costumes/textbox.png",
+        text : text,
+        fontWeight : "bold",
+        fontSize : "30px",
+        fontFamily : "Arial"
+    })
+}
 
 function PaintEditorMorph() {
     this.init();
@@ -222,6 +256,10 @@ PaintEditorMorph.prototype.buildEdits = function () {
     this.edits.add(this.pushButton(
         "clear",
         function () {paper.clearCanvas(); }
+    ));
+    this.edits.add(this.pushButton(
+        "add text box",
+        function () {TextBoxMorph(this.paper); }
     ));
     this.edits.fixLayout();
 };
